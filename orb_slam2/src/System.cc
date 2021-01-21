@@ -55,29 +55,16 @@ System::System(const string strVocFile, const eSensor sensor, ORBParameters& par
         cout << "RGB-D" << endl;
 
     //Load ORB Vocabulary
-    cout << endl << "Loading ORB Vocabulary." << endl;
+    cout << endl << "Loading ORB Vocabulary. This could take a while..." << endl;
 
     mpVocabulary = new ORBVocabulary();
-
-    //try to load from the binary file
-    bool bVocLoad = mpVocabulary->loadFromBinFile(strVocFile+".bin");
-
+    bool bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
     if(!bVocLoad)
     {
-        cerr << "Cannot find binary file for vocabulary. " << endl;
-        cerr << "Failed to open at: " << strVocFile+".bin" << endl;
-        cerr << "Trying to open the text file. This could take a while..." << endl;
-        bool bVocLoad2 = mpVocabulary->loadFromTextFile(strVocFile);
-        if(!bVocLoad2)
-        {
-            cerr << "Wrong path to vocabulary. " << endl;
-            cerr << "Failed to open at: " << strVocFile << endl;
-            exit(-1);
-        }
-        cerr << "Saving the vocabulary to binary for the next time to " << strVocFile+".bin" << endl;
-        mpVocabulary->saveToBinFile(strVocFile+".bin");
+        cerr << "Wrong path to vocabulary. " << endl;
+        cerr << "Falied to open at: " << strVocFile << endl;
+        exit(-1);
     }
-
     cout << "Vocabulary loaded!" << endl << endl;
 
     // begin map serialization addition
