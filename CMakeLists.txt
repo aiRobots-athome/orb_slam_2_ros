@@ -183,3 +183,10 @@ install(DIRECTORY orb_slam2/config/
 install(DIRECTORY orb_slam2/Vocabulary/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/orb_slam2/Vocabulary
 )
+
+add_executable (${PROJECT_NAME}_Trajectory
+ros/src/Trajectory.cc
+)
+target_link_libraries(${PROJECT_NAME}_Trajectory
+${LIBS_ROS}
+)
