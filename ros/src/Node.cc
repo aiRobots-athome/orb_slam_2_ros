@@ -311,6 +311,10 @@ void Node::LoadOrbParameters (ORB_SLAM2::ORBParameters& parameters) {
     node_handle_.param(name_of_node_ + "/depth_map_factor", parameters.depthMapFactor, static_cast<float>(1.0));
   }
 
+  if (sensor_== ORB_SLAM2::System::STEREO || sensor_==ORB_SLAM2::System::RGBD) {
+    node_handle_.getParam(name_of_node_ + "/camera_baseline", parameters.baseline);
+  }
+
   if (load_calibration_from_cam) {
     ROS_INFO_STREAM ("Listening for camera info on topic " << node_handle_.resolveName(camera_info_topic_));
     sensor_msgs::CameraInfo::ConstPtr camera_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>(camera_info_topic_, ros::Duration(1000.0));
@@ -321,9 +325,7 @@ void Node::LoadOrbParameters (ORB_SLAM2::ORBParameters& parameters) {
       parameters.fy = camera_info->K[4];
       parameters.cx = camera_info->K[2];
       parameters.cy = camera_info->K[5];
-
-      parameters.baseline = camera_info->P[3];
-
+    
       parameters.k1 = camera_info->D[0];
       parameters.k2 = camera_info->D[1];
       parameters.p1 = camera_info->D[2];
@@ -334,10 +336,6 @@ void Node::LoadOrbParameters (ORB_SLAM2::ORBParameters& parameters) {
   }
 
   bool got_cam_calibration = true;
-  if (sensor_== ORB_SLAM2::System::STEREO || sensor_==ORB_SLAM2::System::RGBD) {
-    got_cam_calibration &= node_handle_.getParam(name_of_node_ + "/camera_baseline", parameters.baseline);
-  }
-
   got_cam_calibration &= node_handle_.getParam(name_of_node_ + "/camera_fx", parameters.fx);
   got_cam_calibration &= node_handle_.getParam(name_of_node_ + "/camera_fy", parameters.fy);
   got_cam_calibration &= node_handle_.getParam(name_of_node_ + "/camera_cx", parameters.cx);

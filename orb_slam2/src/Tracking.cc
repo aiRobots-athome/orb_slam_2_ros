@@ -79,7 +79,7 @@ Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer,
     }
     DistCoef.copyTo(mDistCoef);
 
-    mbf = parameters.baseline;
+    mbf = parameters.baseline * parameters.fx / 1000;
 
     // Max/Min Frames to insert keyframes and to check relocalization
     mMinFrames = 0;

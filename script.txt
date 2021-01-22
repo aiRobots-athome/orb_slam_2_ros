@@ -1,0 +1,31 @@
+# Save map, default path is ~/.ros/map.bin
+    rosservice call /orb_slam2_rgbd/save_map $PATH_TO_MAP
+
+# Launch camera
+    roslaunch orb_slam2_ros d435i.launch 
+
+    ## To change resolution
+    Modify realsense_ros_launch/d435i.launch
+
+        set depth_width to desired value
+        set depth_height to desired value
+        set color_width to desired value
+        set color_height to desired value
+
+# Launch SLAM
+    roslaunch orb_slam2_ros orb_slam2_d435_rgbd.launch
+
+    ## To create map:
+    Modify orb_slam2_d435_rgbd.launch
+
+        set reset_map to true
+        set localize_only to true
+        set load_map to false
+
+    ## To load map
+    Modify orb_slam2_d435_rgbd.launch
+
+        set reset_map to false
+        set localize_only to false
+        set load_map to true
+        set map_file to $PATH_TO_MAP

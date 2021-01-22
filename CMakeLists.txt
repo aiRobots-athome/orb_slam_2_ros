@@ -187,6 +187,7 @@ install(DIRECTORY orb_slam2/Vocabulary/
 add_executable (${PROJECT_NAME}_Trajectory
 ros/src/Trajectory.cc
 )
+add_dependencies (${PROJECT_NAME}_Trajectory ${PROJECT_NAME} )
 target_link_libraries(${PROJECT_NAME}_Trajectory
 ${LIBS_ROS}
 )
