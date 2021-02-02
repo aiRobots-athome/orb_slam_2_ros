@@ -19,13 +19,13 @@
     Modify orb_slam2_d435_rgbd.launch
 
         set reset_map to true
-        set localize_only to true
+        set localize_only to false
         set load_map to false
 
     ## To load map
     Modify orb_slam2_d435_rgbd.launch
 
         set reset_map to false
-        set localize_only to false
+        set localize_only to true
         set load_map to true
         set map_file to $PATH_TO_MAP
